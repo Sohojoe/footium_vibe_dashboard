@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ApolloProvider } from '@apollo/client';
+import { apolloClient } from './services/apollo';
+import { AppProvider } from './contexts/AppContext';
+import Navbar from './components/Navbar';
+import Dashboard from './pages/Dashboard';
+import Clubs from './pages/Clubs';
+import Settings from './pages/Settings';
+import Leagues from './pages/Leagues';
+import ClubDetails from './pages/ClubDetails';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={apolloClient}>
+      <AppProvider>
+        <Router>
+          <div style={{ minHeight: '100vh', backgroundColor: '#121212', color: 'white' }}>
+            <Navbar />
+            <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem 1rem' }}>
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/clubs" element={<Clubs />} />
+                <Route path="/club/:id" element={<ClubDetails />} />
+                <Route path="/leagues" element={<Leagues />} />
+                <Route path="/settings" element={<Settings />} />
+              </Routes>
+            </main>
+          </div>
+        </Router>
+      </AppProvider>
+    </ApolloProvider>
   );
-}
+};
 
 export default App;
