@@ -1,19 +1,25 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
+import { useApolloClient } from '@apollo/client';
 
 const Navbar: React.FC = () => {
   const { state, dispatch } = useApp();
   const location = useLocation();
+  const client = useApolloClient();
   
-  const handleWalletChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedIndex = parseInt(e.target.value);
-    dispatch({ type: 'SELECT_WALLET', payload: selectedIndex });
-  };
-
   // Check if link is active
   const isActive = (path: string) => {
     return location.pathname === path ? 'nav-link active' : 'nav-link';
+  };
+
+  // Refresh all data
+  const handleRefresh = () => {
+    // Clear Apollo cache to force fresh data fetch
+    client.clearStore().then(() => {
+      // Trigger a re-fetch in the app context
+      dispatch({ type: 'REFRESH_DATA' });
+    });
   };
 
   return (
@@ -35,33 +41,24 @@ const Navbar: React.FC = () => {
           <Link to="/leagues" className={isActive('/leagues')}>
             Leagues
           </Link>
+          <Link to="/live" className={isActive('/live')}>
+            Live Matches
+          </Link>
           <Link to="/settings" className={isActive('/settings')}>
             Settings
           </Link>
           
-          {state.wallets.length > 0 && (
-            <select 
-              value={state.selectedWalletIndex} 
-              onChange={handleWalletChange}
-              className="form-input"
-              style={{ 
-                width: 'auto', 
-                marginLeft: '1rem', 
-                background: 'rgba(0,0,0,0.3)',
-                border: 'none',
-                padding: '0.25rem 0.5rem',
-                borderRadius: '4px',
-                color: 'white',
-                fontSize: '0.875rem'
-              }}
-            >
-              {state.wallets.map((wallet, index) => (
-                <option key={wallet.address} value={index}>
-                  {wallet.name}
-                </option>
-              ))}
-            </select>
-          )}
+          <button 
+            onClick={handleRefresh}
+            className="refresh-button"
+            title="Refresh all data"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path fillRule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+              <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+            </svg>
+            <span>Refresh</span>
+          </button>
         </div>
       </div>
     </nav>

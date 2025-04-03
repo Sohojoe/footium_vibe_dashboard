@@ -118,36 +118,82 @@ const Leagues: React.FC = () => {
       ) : (
         <div className="space-y-8">
           {leagues.map((league) => (
-            <div key={league.name} className="league-card">
-              <div className="league-header">
-                <h2 className="league-name">{league.name}</h2>
+            <div key={league.name} className="league-card" style={{ boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)' }}>
+              <div 
+                className="league-header" 
+                style={{ 
+                  background: 'linear-gradient(135deg, #293170, #1a2048)',
+                  padding: '1.25rem 1.5rem',
+                  borderBottom: '3px solid var(--footium-orange)'
+                }}
+              >
+                <h2 
+                  className="league-name" 
+                  style={{ 
+                    fontSize: '1.4rem', 
+                    fontWeight: '700' 
+                  }}
+                >
+                  {league.name}
+                </h2>
               </div>
+              
               <div className="overflow-x-auto">
-                <table className="league-table">
+                <table className="league-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
                   <thead>
-                    <tr>
-                      <th>Pos</th>
-                      <th>Club</th>
-                      <th>City</th>
-                      <th className="text-center">Status</th>
+                    <tr style={{ backgroundColor: 'rgba(41, 49, 112, 0.3)' }}>
+                      <th style={{ width: '10%', padding: '0.85rem 1.25rem', fontWeight: '600', color: 'var(--text-primary)' }}>Pos</th>
+                      <th style={{ width: '40%', padding: '0.85rem 1.25rem', fontWeight: '600', color: 'var(--text-primary)' }}>Club</th>
+                      <th style={{ width: '30%', padding: '0.85rem 1.25rem', fontWeight: '600', color: 'var(--text-primary)' }}>City</th>
+                      <th style={{ width: '20%', padding: '0.85rem 1.25rem', fontWeight: '600', color: 'var(--text-primary)', textAlign: 'center' }}>Status</th>
                     </tr>
                   </thead>
                   <tbody>
                     {league.clubs.map((club) => (
                       <tr 
                         key={club.id} 
-                        className={club.isOwned ? 'your-club' : ''}
+                        style={{
+                          backgroundColor: club.isOwned ? 'rgba(255, 124, 52, 0.15)' : 'transparent',
+                          transition: 'background-color 0.2s ease',
+                          borderTop: '1px solid var(--border-color)'
+                        }}
+                        className="league-table-row"
                       >
-                        <td>{club.position}</td>
-                        <td className="font-medium">{club.name}</td>
-                        <td>{club.city}</td>
-                        <td className="text-center">
+                        <td style={{ padding: '1rem 1.25rem' }}>
+                          <span style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: '28px',
+                            height: '28px',
+                            borderRadius: '50%',
+                            backgroundColor: club.position <= 3 ? 'var(--footium-blue)' : 'rgba(0, 0, 0, 0.2)',
+                            color: club.position <= 3 ? 'white' : 'var(--text-secondary)',
+                            fontWeight: '600',
+                            fontSize: '0.9rem'
+                          }}>
+                            {club.position}
+                          </span>
+                        </td>
+                        <td style={{ padding: '1rem 1.25rem', fontWeight: '600' }}>{club.name}</td>
+                        <td style={{ padding: '1rem 1.25rem', color: 'var(--text-secondary)' }}>{club.city}</td>
+                        <td style={{ padding: '1rem 1.25rem', textAlign: 'center' }}>
                           {club.isOwned ? (
-                            <span className="your-club-badge">
+                            <span style={{
+                              display: 'inline-block',
+                              backgroundColor: 'var(--footium-orange)',
+                              color: 'white',
+                              padding: '0.3rem 0.6rem',
+                              borderRadius: '4px',
+                              fontWeight: '600',
+                              fontSize: '0.8rem',
+                              letterSpacing: '0.5px',
+                              boxShadow: '0 2px 4px rgba(0,0,0,0.15)'
+                            }}>
                               YOUR CLUB
                             </span>
                           ) : (
-                            <span className="text-muted">Rival</span>
+                            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Rival</span>
                           )}
                         </td>
                       </tr>

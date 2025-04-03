@@ -94,8 +94,8 @@ const Dashboard: React.FC = () => {
     fetchAllClubs();
   }, [client, state.wallets, dispatch]);
 
-  // Get the wallet details for display
-  const currentWallet = state.wallets[state.selectedWalletIndex] || { name: '', address: '' };
+  // Calculate total active wallets
+  const activeWallets = state.wallets.length;
 
   return (
     <div className="container">
@@ -116,9 +116,18 @@ const Dashboard: React.FC = () => {
           <p className="summary-value">{stats.totalGoals}</p>
         </div>
         <div className="summary-card">
-          <h3 className="summary-label">Current Wallet</h3>
-          <p className="summary-value">{currentWallet.name}</p>
-          <span className="summary-wallet">{currentWallet.address}</span>
+          <h3 className="summary-label">Active Wallets</h3>
+          <p className="summary-value">{activeWallets}</p>
+          <span 
+            className="summary-wallet" 
+            style={{ 
+              fontSize: '0.85rem', 
+              color: 'rgba(255,255,255,0.7)',
+              marginTop: '0.5rem'
+            }}
+          >
+            Managing all clubs across wallets
+          </span>
         </div>
       </div>
 
@@ -127,11 +136,42 @@ const Dashboard: React.FC = () => {
         <div className="mb-8">
           <h2 className="section-header">Divisions Breakdown</h2>
           <div className="division-grid">
-            {Object.entries(stats.divisions).map(([division, count]) => (
-              <div key={division} className="division-card">
-                <h3 className="division-name">{division}</h3>
-                <p className="division-count">{count}</p>
-              </div>
+            {Object.entries(stats.divisions)
+              .sort(([divA], [divB]) => {
+                // Extract division number for sorting
+                const numA = parseInt(divA.replace('Division ', '')) || 0;
+                const numB = parseInt(divB.replace('Division ', '')) || 0;
+                return numA - numB;
+              })
+              .map(([division, count]) => (
+                <div 
+                  key={division} 
+                  style={{
+                    backgroundColor: 'var(--footium-blue)',
+                    backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3))',
+                    borderRadius: '8px',
+                    padding: '1.25rem',
+                    textAlign: 'center',
+                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2)'
+                  }}
+                >
+                  <h3 style={{
+                    fontWeight: '600',
+                    fontSize: '1.1rem',
+                    margin: '0 0 0.75rem 0',
+                    color: 'white'
+                  }}>
+                    {division}
+                  </h3>
+                  <p style={{
+                    fontSize: '2rem',
+                    fontWeight: '700',
+                    margin: 0,
+                    color: 'var(--footium-orange)'
+                  }}>
+                    {count}
+                  </p>
+                </div>
             ))}
           </div>
         </div>

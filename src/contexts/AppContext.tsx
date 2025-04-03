@@ -28,7 +28,8 @@ type ActionType =
   | { type: 'SELECT_WALLET'; payload: number }
   | { type: 'SET_CLUBS'; payload: any[] }
   | { type: 'SET_LOADING'; payload: boolean }
-  | { type: 'SET_ERROR'; payload: string | null };
+  | { type: 'SET_ERROR'; payload: string | null }
+  | { type: 'REFRESH_DATA' };
 
 // Reducer function
 const appReducer = (state: AppState, action: ActionType): AppState => {
@@ -54,6 +55,16 @@ const appReducer = (state: AppState, action: ActionType): AppState => {
       return { ...state, isLoading: action.payload };
     case 'SET_ERROR':
       return { ...state, error: action.payload };
+    case 'REFRESH_DATA':
+      // Just trigger a state update to initiate re-fetching in components
+      // that depend on this state
+      return { 
+        ...state, 
+        isLoading: true,
+        error: null,
+        // Clear clubs array to force a re-fetch
+        clubs: []
+      };
     default:
       return state;
   }

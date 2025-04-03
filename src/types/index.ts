@@ -48,3 +48,39 @@ export interface AppState {
   isLoading: boolean;
   error: string | null;
 }
+
+export interface LiveMatch {
+  homeClubId: number;
+  homeScore: number;
+  awayClubId: number;
+  awayScore: number;
+  homeClubScorers: string[];
+  awayClubScorers: string[];
+  keyEvents: LiveMatchEvent[];
+  timestamp: number;
+  matchTime: string;
+  periodStates: PeriodState[];
+}
+
+export interface LiveMatchEvent {
+  type: number; // 0 for goal, 2 for card, etc.
+  clubId: number;
+  timestamp: number;
+  scorerPlayerId?: string;
+  assisterPlayerId?: string;
+  card?: number; // 0 for yellow, 1 for red
+  playerId?: string;
+}
+
+export interface PeriodState {
+  period: number;
+  isBreak: boolean;
+  injuryTime: number;
+  isInInjuryTime: boolean;
+  startTimestamp: number;
+}
+
+export interface PlayerInfo {
+  surname: string;
+  fullName: string;
+}

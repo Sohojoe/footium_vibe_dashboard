@@ -318,6 +318,11 @@ nav .container {
   font-weight: 600;
 }
 
+.league-table-row:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  cursor: pointer;
+}
+
 /* Settings page */
 .settings-section {
   background-color: var(--card-bg);
@@ -439,6 +444,28 @@ nav .container {
   cursor: pointer;
 }
 
+.refresh-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border-radius: 4px;
+  border: none;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.refresh-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.refresh-button svg {
+  color: var(--footium-orange);
+}
+
 /* Utility classes */
 .text-center {
   text-align: center;
@@ -476,4 +503,121 @@ nav .container {
 
 .p-4 {
   padding: 1rem;
+}
+
+/* Live Match Styles */
+.match-score-container {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.match-teams {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-team {
+  text-align: right;
+  flex: 1;
+}
+
+.away-team {
+  text-align: left;
+  flex: 1;
+}
+
+.team h4 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.team-score {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--footium-orange);
+}
+
+.match-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1.5rem;
+}
+
+.match-time {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background-color: rgba(255, 124, 52, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+.scorers-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.home-scorers, .away-scorers {
+  width: 45%;
+}
+
+.home-scorers {
+  text-align: right;
+}
+
+.away-scorers {
+  text-align: left;
+}
+
+.scorer {
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+}
+
+.key-events-container {
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
+}
+
+.key-events-container h5 {
+  font-size: 1.1rem;
+  margin: 0 0 1rem;
+  color: var(--text-primary);
+}
+
+.events-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.event-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.event-time {
+  font-weight: 600;
+  color: var(--footium-orange);
+  min-width: 2.5rem;
+}
+
+.event-icon {
+  font-size: 1.2rem;
+}
+
+.event-team {
+  color: var(--text-secondary);
 }

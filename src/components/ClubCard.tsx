@@ -14,43 +14,106 @@ const ClubCard: React.FC<ClubCardProps> = ({ club }) => {
 
   // Create gradient background based on club colors
   const colorGradient = club.colours && club.colours.length >= 2 
-    ? `linear-gradient(to right, ${club.colours[0]}, ${club.colours[1]})`
-    : 'linear-gradient(to right, #293170, #FF7C34)'; // Default Footium colors
+    ? `linear-gradient(135deg, ${club.colours[0]}, ${club.colours[1]})`
+    : 'linear-gradient(135deg, #293170, #FF7C34)'; // Default Footium colors
 
   return (
     <div className="card hover-effect">
-      <div style={{ height: '8px', background: colorGradient }}></div>
+      {/* Improved colorful header with the club name */}
+      <div 
+        style={{ 
+          background: colorGradient,
+          padding: '1rem',
+          position: 'relative'
+        }}
+      >
+        <h3 
+          className="club-name" 
+          style={{ 
+            margin: 0, 
+            color: 'white',
+            textShadow: '0 1px 3px rgba(0,0,0,0.8)',
+            fontSize: '1.35rem'
+          }}
+        >
+          {club.name}
+        </h3>
+        <p style={{ 
+          margin: '0.25rem 0 0 0', 
+          color: 'rgba(255,255,255,0.9)',
+          fontSize: '0.9rem'
+        }}>
+          {club.city}
+        </p>
+      </div>
+
       <div className="card-body">
-        <h3 className="club-name">{club.name}</h3>
-        <p className="club-city">{club.city}</p>
-        
+        {/* Tournament information with improved position badge */}
         {currentTournament && (
-          <div className="tournament-info">
-            <p>
-              <span className="tournament-name">{currentTournament.tournament.name}</span>
-              <span className="position-badge">Position: {currentTournament.position}</span>
-            </p>
+          <div 
+            style={{
+              marginBottom: '1rem',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}
+          >
+            <div>
+              <span 
+                style={{
+                  color: 'var(--footium-orange)',
+                  fontWeight: 600,
+                  fontSize: '1rem'
+                }}
+              >
+                {currentTournament.tournament.name}
+              </span>
+            </div>
+            <div 
+              style={{
+                backgroundColor: 'var(--footium-blue)',
+                color: 'white',
+                padding: '0.35rem 0.75rem',
+                borderRadius: '4px',
+                fontWeight: 600,
+                fontSize: '0.875rem'
+              }}
+            >
+              Position: {currentTournament.position}
+            </div>
           </div>
         )}
 
+        {/* Wallet name with better contrast */}
         {club.walletName && (
-          <div className="mb-2">
-            <small className="text-muted">Wallet: {club.walletName}</small>
+          <div 
+            style={{
+              padding: '0.5rem',
+              backgroundColor: 'rgba(41, 49, 112, 0.2)',
+              borderRadius: '4px',
+              marginBottom: '1rem',
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
+            <span style={{ color: 'var(--text-secondary)', marginRight: '0.5rem' }}>Wallet:</span>
+            <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{club.walletName}</span>
           </div>
         )}
         
+        {/* Stats with improved readability */}
         {latestStats && (
           <div className="stats-grid">
-            <div className="stat-item">
-              <p className="stat-label">Record</p>
+            <div className="stat-item" style={{ backgroundColor: 'rgba(41, 49, 112, 0.25)' }}>
+              <p className="stat-label" style={{ color: 'var(--text-primary)', opacity: 0.8 }}>Record</p>
               <p className="stat-value">{latestStats.wins}W-{latestStats.draws}D-{latestStats.losses}L</p>
             </div>
-            <div className="stat-item">
-              <p className="stat-label">Points</p>
-              <p className="stat-value">{latestStats.points}</p>
+            <div className="stat-item" style={{ backgroundColor: 'rgba(41, 49, 112, 0.25)' }}>
+              <p className="stat-label" style={{ color: 'var(--text-primary)', opacity: 0.8 }}>Points</p>
+              <p className="stat-value" style={{ color: 'var(--footium-orange)' }}>{latestStats.points}</p>
             </div>
-            <div className="stat-item">
-              <p className="stat-label">Goals</p>
+            <div className="stat-item" style={{ backgroundColor: 'rgba(41, 49, 112, 0.25)' }}>
+              <p className="stat-label" style={{ color: 'var(--text-primary)', opacity: 0.8 }}>Goals</p>
               <p className="stat-value">{latestStats.goals} / {latestStats.goalsAgainst}</p>
             </div>
           </div>

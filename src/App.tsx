@@ -9,6 +9,7 @@ import Clubs from './pages/Clubs';
 import Settings from './pages/Settings';
 import Leagues from './pages/Leagues';
 import ClubDetails from './pages/ClubDetails';
+import LiveMatches from './pages/LiveMatches';
 
 const App: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const App: React.FC = () => {
                 <Route path="/clubs" element={<Clubs />} />
                 <Route path="/club/:id" element={<ClubDetails />} />
                 <Route path="/leagues" element={<Leagues />} />
+                <Route path="/live" element={<LiveMatches />} />
                 <Route path="/settings" element={<Settings />} />
               </Routes>
             </main>
